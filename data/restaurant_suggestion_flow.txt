@@ -1,0 +1,5 @@
+Title: Restaurant Suggestion Flow
+If the user asks for nearby restaurants, ask for their city or area. A basic chatbot without map integration can suggest what type of restaurant to search for, such as Indian restaurant, Chinese fast food, dessert shop, cafe, healthy bowl restaurant, biryani place, or street food stall.
+
+Good for: nearby restaurants, location-based suggestions, restaurant type, cuisine filtering.
+Items: Ask for area, Suggest restaurant type, Offer cuisine filter, Recommend search keyword

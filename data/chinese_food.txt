@@ -1,0 +1,5 @@
+Title: Chinese Food
+For Chinese cuisine, recommend veg hakka noodles, chicken noodles, fried rice, manchurian, chilli chicken, momos, schezwan noodles, or chilli paneer. Schezwan and chilli dishes are better for users asking for spicy food.
+
+Good for: Chinese cuisine, spicy food, fast food, evening snacks, lunch, dinner.
+Items: Veg hakka noodles, Chicken noodles, Fried rice, Manchurian, Chilli chicken, Momos, Schezwan noodles, Chilli paneer
