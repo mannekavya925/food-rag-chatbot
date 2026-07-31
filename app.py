@@ -15,8 +15,8 @@ DEFAULT_FOOD_IMAGE = PROJECT_DIR / "assets" / "images" / "default-food.svg"
 UI_TEXT = {
     "English": {
         "language": "Language",
-        "page_title": "RAG FoodBot",
-        "title": "RAG Food Recommendation Chatbot",
+        "page_title": "Smart Bite Assistant",
+        "title": "Smart Bite Recommendation Assistant",
         "caption": "Ask by mood, cuisine, diet, budget, spice level, or meal time.",
         "info": "Corrected app: local-only RAG from the data folder. No Gemini, Google API, or paid AI API calls are used.",
         "knowledge_base": "Knowledge Base",
