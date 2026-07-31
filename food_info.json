@@ -1,0 +1,218 @@
+﻿{
+    "Grilled chicken salad":  {
+                                  "calories":  350,
+                                  "image":  "assets/images/default-food.svg"
+                              },
+    "Sprout bowl":  {
+                        "calories":  220,
+                        "image":  "assets/images/default-food.svg"
+                    },
+    "Vegetable soup":  {
+                           "calories":  120,
+                           "image":  "assets/images/default-food.svg"
+                       },
+    "Paneer tikka":  {
+                         "calories":  280,
+                         "image":  "assets/images/default-food.svg"
+                     },
+    "Fruit bowl":  {
+                       "calories":  180,
+                       "image":  "assets/images/default-food.svg"
+                   },
+    "Dal rice":  {
+                     "calories":  380,
+                     "image":  "assets/images/default-food.svg"
+                 },
+    "Grilled fish":  {
+                         "calories":  240,
+                         "image":  "assets/images/default-food.svg"
+                     },
+    "Tomato soup with garlic bread":  {
+                                          "calories":  260,
+                                          "image":  "assets/images/default-food.svg"
+                                      },
+    "Khichdi":  {
+                    "calories":  320,
+                    "image":  "assets/images/default-food.svg"
+                },
+    "Rajma rice":  {
+                       "calories":  420,
+                       "image":  "assets/images/default-food.svg"
+                   },
+    "Pizza":  {
+                  "calories":  285,
+                  "image":  "assets/images/default-food.svg"
+              },
+    "Biryani":  {
+                    "calories":  490,
+                    "image":  "assets/images/default-food.svg"
+                },
+    "Noodles":  {
+                    "calories":  400,
+                    "image":  "assets/images/default-food.svg"
+                },
+    "Hot chocolate":  {
+                          "calories":  220,
+                          "image":  "assets/images/default-food.svg"
+                      },
+    "Dessert":  {
+                    "calories":  300,
+                    "image":  "assets/images/default-food.svg"
+                },
+    "Veg hakka noodles":  {
+                              "calories":  380,
+                              "image":  "assets/images/default-food.svg"
+                          },
+    "Chicken noodles":  {
+                            "calories":  430,
+                            "image":  "assets/images/default-food.svg"
+                        },
+    "Fried rice":  {
+                       "calories":  420,
+                       "image":  "assets/images/fried-rice.jpg"
+                   },
+    "Manchurian":  {
+                       "calories":  320,
+                       "image":  "assets/images/default-food.svg"
+                   },
+    "Chilli chicken":  {
+                           "calories":  340,
+                           "image":  "assets/images/default-food.svg"
+                       },
+    "Momos":  {
+                  "calories":  280,
+                  "image":  "assets/images/default-food.svg"
+              },
+    "Schezwan noodles":  {
+                             "calories":  420,
+                             "image":  "assets/images/default-food.svg"
+                         },
+    "Chilli paneer":  {
+                          "calories":  330,
+                          "image":  "assets/images/default-food.svg"
+                      },
+    "Pasta":  {
+                  "calories":  380,
+                  "image":  "assets/images/default-food.svg"
+              },
+    "Lasagna":  {
+                    "calories":  450,
+                    "image":  "assets/images/default-food.svg"
+                },
+    "Garlic bread":  {
+                         "calories":  180,
+                         "image":  "assets/images/default-food.svg"
+                     },
+    "Risotto":  {
+                    "calories":  410,
+                    "image":  "assets/images/default-food.svg"
+                },
+    "Minestrone soup":  {
+                            "calories":  160,
+                            "image":  "assets/images/default-food.svg"
+                        },
+    "Chicken biryani":  {
+                            "calories":  550,
+                            "image":  "assets/images/chickenbiryanibowltop.jpg"
+                        },
+    "Spicy paneer wrap":  {
+                              "calories":  360,
+                              "image":  "assets/images/default-food.svg"
+                          },
+    "Vada pav":  {
+                     "calories":  290,
+                     "image":  "assets/images/default-food.svg"
+                 },
+    "Samosa chaat":  {
+                         "calories":  360,
+                         "image":  "assets/images/default-food.svg"
+                     },
+    "Masala dosa":  {
+                        "calories":  420,
+                        "image":  "assets/images/Mysore-Masala-Dosa-Recipe-3.jpg"
+                    },
+    "Chilli potato":  {
+                          "calories":  340,
+                          "image":  "assets/images/default-food.svg"
+                      },
+    "Egg roll":  {
+                     "calories":  330,
+                     "image":  "assets/images/default-food.svg"
+                 },
+    "Gulab jamun":  {
+                        "calories":  175,
+                        "image":  "assets/images/default-food.svg"
+                    },
+    "Ice cream":  {
+                      "calories":  210,
+                      "image":  "assets/images/default-food.svg"
+                  },
+    "Brownie":  {
+                    "calories":  310,
+                    "image":  "assets/images/default-food.svg"
+                },
+    "Fruit custard":  {
+                          "calories":  220,
+                          "image":  "assets/images/default-food.svg"
+                      },
+    "Rasmalai":  {
+                     "calories":  250,
+                     "image":  "assets/images/default-food.svg"
+                 },
+    "Milkshake":  {
+                      "calories":  350,
+                      "image":  "assets/images/default-food.svg"
+                  },
+    "Jalebi":  {
+                   "calories":  310,
+                   "image":  "assets/images/default-food.svg"
+               },
+    "Chocolate cake":  {
+                           "calories":  370,
+                           "image":  "assets/images/default-food.svg"
+                       },
+    "Grilled chicken":  {
+                            "calories":  280,
+                            "image":  "assets/images/default-food.svg"
+                        },
+    "Chicken roll":  {
+                         "calories":  380,
+                         "image":  "assets/images/default-food.svg"
+                     },
+    "Egg fried rice":  {
+                           "calories":  460,
+                           "image":  "assets/images/default-food.svg"
+                       },
+    "Fish curry":  {
+                       "calories":  280,
+                       "image":  "assets/images/default-food.svg"
+                   },
+    "Chicken tikka":  {
+                          "calories":  300,
+                          "image":  "assets/images/default-food.svg"
+                      },
+    "Paneer butter masala":  {
+                                 "calories":  390,
+                                 "image":  "assets/images/Paneer-Butter-Masala-3.jpg"
+                             },
+    "Veg biryani":  {
+                        "calories":  430,
+                        "image":  "assets/images/default-food.svg"
+                    },
+    "Chole bhature":  {
+                          "calories":  450,
+                          "image":  "assets/images/default-food.svg"
+                      },
+    "Pav bhaji":  {
+                      "calories":  400,
+                      "image":  "assets/images/default-food.svg"
+                  },
+    "Dal tadka":  {
+                      "calories":  270,
+                      "image":  "assets/images/default-food.svg"
+                  },
+    "Paneer roll":  {
+                        "calories":  370,
+                        "image":  "assets/images/Paneer-kathi-Roll-6.jpg"
+                    }
+}

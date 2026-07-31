@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="400" viewBox="0 0 640 400" role="img" aria-label="Food placeholder">
+  <rect width="640" height="400" fill="#fff4e6"/>
+  <circle cx="320" cy="200" r="125" fill="#ffffff" stroke="#f39c4b" stroke-width="10"/>
+  <path d="M230 175h180M250 215h140" stroke="#f39c4b" stroke-width="22" stroke-linecap="round"/>
+  <text x="320" y="355" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" fill="#8a4b1e">Food image unavailable</text>
+</svg>

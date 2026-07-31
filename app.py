@@ -1,3 +1,4 @@
+import json
 import math
 import re
 from collections import Counter
@@ -7,6 +8,150 @@ import streamlit as st
 
 
 DATA_DIR = Path(__file__).parent / "data"
+PROJECT_DIR = Path(__file__).parent
+FOOD_INFO_PATH = PROJECT_DIR / "food_info.json"
+DEFAULT_FOOD_IMAGE = PROJECT_DIR / "assets" / "images" / "default-food.svg"
+
+UI_TEXT = {
+    "English": {
+        "language": "Language",
+        "page_title": "RAG FoodBot",
+        "title": "RAG Food Recommendation Chatbot",
+        "caption": "Ask by mood, cuisine, diet, budget, spice level, or meal time.",
+        "info": "Corrected app: local-only RAG from the data folder. No Gemini, Google API, or paid AI API calls are used.",
+        "knowledge_base": "Knowledge Base",
+        "knowledge_base_description": "This chatbot retrieves from local text files in the data folder before answering.",
+        "documents": "Documents",
+        "try_asking": "Try asking",
+        "chat_placeholder": "Example: spicy Indian food under Rs. 200",
+        "retrieved_context": "Retrieved context",
+        "no_context": "No matching data file was retrieved.",
+        "calories": "Calories",
+        "calories_unavailable": "Not available",
+    },
+    "Telugu": {
+        "language": "భాష",
+        "page_title": "RAG ఫుడ్‌బాట్",
+        "title": "RAG ఆహార సిఫార్సు చాట్‌బాట్",
+        "caption": "మీ మూడ్, వంటకం, ఆహార అభిరుచి, బడ్జెట్, కారపు స్థాయి లేదా భోజన సమయాన్ని అడగండి.",
+        "info": "ఈ యాప్ డేటా ఫోల్డర్‌లోని స్థానిక ఫైళ్లను మాత్రమే ఉపయోగిస్తుంది. Gemini, Google API లేదా చెల్లింపు AI APIలను ఉపయోగించదు.",
+        "knowledge_base": "జ్ఞాన భాండారం",
+        "knowledge_base_description": "ఈ చాట్‌బాట్ సమాధానం ఇవ్వడానికి ముందు డేటా ఫోల్డర్‌లోని స్థానిక టెక్స్ట్ ఫైళ్ల నుండి సమాచారాన్ని పొందుతుంది.",
+        "documents": "పత్రాలు",
+        "try_asking": "ఇలా అడగండి",
+        "chat_placeholder": "ఉదాహరణ: రూ. 200 లోపు కారంగా ఉండే భారతీయ ఆహారం",
+        "retrieved_context": "పొందిన సమాచారం",
+        "no_context": "సరిపోలే డేటా ఫైల్ కనుగొనబడలేదు.",
+        "calories": "కేలరీలు",
+        "calories_unavailable": "అందుబాటులో లేదు",
+    },
+    "Hindi": {
+        "language": "भाषा",
+        "page_title": "RAG फ़ूडबॉट",
+        "title": "RAG भोजन सुझाव चैटबॉट",
+        "caption": "मूड, व्यंजन, आहार, बजट, मसाले के स्तर या भोजन के समय के आधार पर पूछें।",
+        "info": "यह ऐप डेटा फ़ोल्डर की स्थानीय फ़ाइलों का उपयोग करता है। इसमें Gemini, Google API या सशुल्क AI API का उपयोग नहीं होता।",
+        "knowledge_base": "ज्ञान आधार",
+        "knowledge_base_description": "यह चैटबॉट जवाब देने से पहले डेटा फ़ोल्डर की स्थानीय टेक्स्ट फ़ाइलों से जानकारी प्राप्त करता है।",
+        "documents": "दस्तावेज़",
+        "try_asking": "पूछकर देखें",
+        "chat_placeholder": "उदाहरण: रु. 200 से कम में मसालेदार भारतीय खाना",
+        "retrieved_context": "प्राप्त संदर्भ",
+        "no_context": "कोई मेल खाती डेटा फ़ाइल नहीं मिली।",
+        "calories": "कैलोरी",
+        "calories_unavailable": "उपलब्ध नहीं",
+    },
+    "Tamil": {
+        "language": "மொழி",
+        "page_title": "RAG ஃபுட்பாட்",
+        "title": "RAG உணவுப் பரிந்துரை சாட்பாட்",
+        "caption": "மனம், உணவு வகை, உணவுப் பழக்கம், பட்ஜெட், கார அளவு அல்லது உணவு நேரம் பற்றி கேளுங்கள்.",
+        "info": "இந்த செயலி தரவு கோப்புறையிலுள்ள உள்ளூர் கோப்புகளை மட்டுமே பயன்படுத்துகிறது. Gemini, Google API அல்லது கட்டண AI API பயன்படுத்தப்படவில்லை.",
+        "knowledge_base": "அறிவுத் தளம்",
+        "knowledge_base_description": "இந்த சாட்பாட் பதிலளிக்கும் முன் தரவு கோப்புறையிலுள்ள உள்ளூர் உரைக் கோப்புகளில் இருந்து தகவலைப் பெறுகிறது.",
+        "documents": "ஆவணங்கள்",
+        "try_asking": "கேட்டுப் பாருங்கள்",
+        "chat_placeholder": "உதாரணம்: ரூ. 200-க்குள் காரமான இந்திய உணவு",
+        "retrieved_context": "பெறப்பட்ட சூழல்",
+        "no_context": "பொருந்தும் தரவுக் கோப்பு கிடைக்கவில்லை.",
+        "calories": "கலோரிகள்",
+        "calories_unavailable": "கிடைக்கவில்லை",
+    },
+    "Kannada": {
+        "language": "ಭಾಷೆ",
+        "page_title": "RAG ಫುಡ್‌ಬಾಟ್",
+        "title": "RAG ಆಹಾರ ಶಿಫಾರಸು ಚಾಟ್‌ಬಾಟ್",
+        "caption": "ಮನಸ್ಥಿತಿ, ಪಾಕಶೈಲಿ, ಆಹಾರ ಪದ್ಧತಿ, ಬಜೆಟ್, ಖಾರದ ಮಟ್ಟ ಅಥವಾ ಊಟದ ಸಮಯದ ಬಗ್ಗೆ ಕೇಳಿ.",
+        "info": "ಈ ಅಪ್ಲಿಕೇಶನ್ ಡೇಟಾ ಫೋಲ್ಡರ್‌ನಲ್ಲಿರುವ ಸ್ಥಳೀಯ ಫೈಲ್‌ಗಳನ್ನು ಮಾತ್ರ ಬಳಸುತ್ತದೆ. Gemini, Google API ಅಥವಾ ಪಾವತಿಸಿದ AI APIಗಳನ್ನು ಬಳಸುವುದಿಲ್ಲ.",
+        "knowledge_base": "ಜ್ಞಾನ ಭಂಡಾರ",
+        "knowledge_base_description": "ಈ ಚಾಟ್‌ಬಾಟ್ ಉತ್ತರಿಸುವ ಮೊದಲು ಡೇಟಾ ಫೋಲ್ಡರ್‌ನಲ್ಲಿರುವ ಸ್ಥಳೀಯ ಪಠ್ಯ ಫೈಲ್‌ಗಳಿಂದ ಮಾಹಿತಿಯನ್ನು ಪಡೆಯುತ್ತದೆ.",
+        "documents": "ದಾಖಲೆಗಳು",
+        "try_asking": "ಹೀಗೆ ಕೇಳಿ",
+        "chat_placeholder": "ಉದಾಹರಣೆ: ರೂ. 200 ಒಳಗೆ ಖಾರವಾದ ಭಾರತೀಯ ಆಹಾರ",
+        "retrieved_context": "ಪಡೆದ ಮಾಹಿತಿ",
+        "no_context": "ಹೊಂದುವ ಡೇಟಾ ಫೈಲ್ ದೊರೆಯಲಿಲ್ಲ.",
+        "calories": "ಕ್ಯಾಲೊರಿಗಳು",
+        "calories_unavailable": "ಲಭ್ಯವಿಲ್ಲ",
+    },
+}
+
+
+def get_ui_text():
+    """Return the UI labels for the language selected in the sidebar."""
+    language = st.session_state.get("language", "English")
+    return UI_TEXT[language]
+
+
+@st.cache_data
+def load_food_info():
+    """Load display-only food metadata without affecting recommendation logic."""
+    if not FOOD_INFO_PATH.exists():
+        return {}
+
+    try:
+        return json.loads(FOOD_INFO_PATH.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return {}
+
+
+def get_food_image(food_info):
+    """Use a food image when present, otherwise return the local fallback image."""
+    image_path = PROJECT_DIR / food_info.get("image", "")
+    return image_path if image_path.is_file() else DEFAULT_FOOD_IMAGE
+
+
+def extract_recommended_foods(answer):
+    """Read food names from the already-generated response for display cards."""
+    section = answer.partition("Recommended foods:\n")[2].partition("\n\n")[0]
+    return [line.removeprefix("- ") for line in section.splitlines() if line.startswith("- ")]
+
+
+def display_food_details(food_names, ui):
+    """Render calorie and rating details for the foods already recommended."""
+    food_info = load_food_info()
+
+    for index, food_name in enumerate(food_names):
+        details = food_info.get(food_name, {})
+        calories = details.get("calories", ui["calories_unavailable"])
+        calorie_text = (
+            f"{calories} kcal"
+            if isinstance(calories, (int, float))
+            else calories
+        )
+
+        rating_value = details.get("rating")
+        if rating_value in (None, ""):
+            rating_text = "4.5/5"
+        elif isinstance(rating_value, (int, float)):
+            rating_text = f"{float(rating_value):.1f}/5"
+        else:
+            rating_text = f"{rating_value}/5"
+
+        st.markdown(f"**{food_name}**")
+        st.write(f"🔥 {ui['calories']}: {calorie_text}")
+        st.write(f"⭐ Rating: {rating_text}")
+        if index < len(food_names) - 1:
+            st.write("")
 
 STOP_WORDS = {
     "a",
@@ -143,13 +288,11 @@ def build_answer(query, contexts):
 
     answer = (
         f"Based on your message, I retrieved: {context_titles}.{budget_line}\n\n"
-        "Recommended foods:\n"
+        "Recommended foods:\n\n"
     )
     answer += "\n".join(f"- {item}" for item in recommendations)
     answer += (
-        "\n\nMy best pick: "
-        f"{recommendations[0]}, because it closely matches your craving and preference.\n\n"
-        "Want me to filter this by veg/non-veg, cuisine, meal time, or nearby restaurants?"
+        f"\n\nMy best pick: {recommendations[0]}, because it closely matches your craving and preference."
     )
     return answer
 
@@ -159,18 +302,31 @@ def answer_user(query):
     return build_answer(query, contexts), contexts
 
 
-st.set_page_config(page_title="RAG FoodBot", page_icon="Food", layout="centered")
-
-st.title("RAG Food Recommendation Chatbot")
-st.caption("Ask by mood, cuisine, diet, budget, spice level, or meal time.")
-st.info("Corrected app: local-only RAG from the data folder. No Gemini, Google API, or paid AI API calls are used.")
+st.set_page_config(
+    page_title=get_ui_text()["page_title"],
+    page_icon="Food",
+    layout="centered",
+)
 
 with st.sidebar:
-    st.header("Knowledge Base")
-    st.write("This chatbot retrieves from local text files in the data folder before answering.")
-    st.write(f"Documents: {len(load_knowledge_base())}")
+    st.selectbox(
+        get_ui_text()["language"],
+        options=list(UI_TEXT),
+        key="language",
+    )
+
+ui = get_ui_text()
+
+st.title(ui["title"])
+st.caption(ui["caption"])
+st.info(ui["info"])
+
+with st.sidebar:
+    st.header(ui["knowledge_base"])
+    st.write(ui["knowledge_base_description"])
+    st.write(f"{ui['documents']}: {len(load_knowledge_base())}")
     st.divider()
-    st.subheader("Try asking")
+    st.subheader(ui["try_asking"])
     st.code("I want something spicy under Rs. 200")
     st.code("Suggest healthy vegetarian lunch")
     st.code("I am sad and want comfort food")
@@ -190,8 +346,10 @@ if "messages" not in st.session_state:
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
+        if message["role"] == "assistant" and message.get("food_names"):
+            display_food_details(message["food_names"], ui)
 
-prompt = st.chat_input("Example: spicy Indian food under Rs. 200")
+prompt = st.chat_input(ui["chat_placeholder"])
 
 if prompt:
     st.session_state.messages.append({"role": "user", "content": prompt})
@@ -199,16 +357,15 @@ if prompt:
         st.markdown(prompt)
 
     response, retrieved_contexts = answer_user(prompt)
-    st.session_state.messages.append({"role": "assistant", "content": response})
+    recommended_foods = extract_recommended_foods(response)
+    st.session_state.messages.append(
+        {
+            "role": "assistant",
+            "content": response,
+            "food_names": recommended_foods,
+        }
+    )
 
     with st.chat_message("assistant"):
         st.markdown(response)
-
-        with st.expander("Retrieved context"):
-            if not retrieved_contexts:
-                st.write("No matching data file was retrieved.")
-            for context in retrieved_contexts:
-                st.markdown(
-                    f"**{context['title']}** - score `{context['score']:.2f}` - `{context['source']}`"
-                )
-                st.write(context["content"])
+        display_food_details(recommended_foods, ui)
